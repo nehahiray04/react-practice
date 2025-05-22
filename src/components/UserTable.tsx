@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { User } from '../models/User';
 import { useUserContext } from '../context/UserContext';
+import { Eye } from 'lucide-react'; // 👁️ Eye icon
 
 const UserTable: React.FC<{ users: User[] }> = ({ users }) => {
   const { dispatch } = useUserContext();
@@ -59,13 +60,18 @@ const UserTable: React.FC<{ users: User[] }> = ({ users }) => {
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {sortedUsers.map((user, index) => (
-            <tr
-              key={user.id}
-              onClick={() => dispatch({ type: 'SELECT_USER', payload: user })}
-              className="hover:bg-gray-50 cursor-pointer transition duration-150"
-            >
+            <tr key={user.id} className="hover:bg-gray-50 transition duration-150">
               <td className="px-4 py-4 border-r border-gray-200 text-sm text-gray-800">{index + 1}</td>
-              <td className="px-6 py-4 border-r border-gray-200 text-sm text-gray-800">{user.name}</td>
+              <td className="px-6 py-4 border-r border-gray-200 text-sm text-gray-800 flex items-center gap-2">
+                <button
+                  onClick={() => dispatch({ type: 'SELECT_USER', payload: user })}
+                  className="p-1 text-blue-600 hover:text-blue-800"
+                  title="View Details"
+                >
+                  <Eye size={16} />
+                </button>
+                <span>{user.name}</span>
+              </td>
               <td className="px-6 py-4 border-r border-gray-200 text-sm text-blue-600">{user.email}</td>
               <td className="px-6 py-4 text-sm text-gray-800">{user.company.name}</td>
             </tr>
